@@ -1,0 +1,30 @@
+# DevOps LLM Agent Implementation Plan
+
+This plan outlines the architecture and steps to set up the DevOps LLM Agent locally, ready for Colab training and local/cloud deployment.
+
+## Proposed Changes
+
+We will create a foundational project structure under `devops-llm-saas/`.
+
+### Project Structure & Training Notebooks
+- **[NEW] [notebooks/unsloth_finetuning.ipynb](file:///devops-llm-saas/notebooks/unsloth_finetuning.ipynb)**: A Jupyter notebook ready to be uploaded to Google Colab. It will contain the code to fine-tune `unsloth/Qwen2.5-7B-bnb-4bit` (or Llama 3) on a DevOps dataset and export to GGUF.
+
+### Backend (FastAPI + LangChain RAG)
+- **[NEW] [backend/main.py](file:///devops-llm-saas/backend/main.py)**: FastAPI application exposing the `/chat` endpoint.
+- **[NEW] [backend/agent.py](file:///devops-llm-saas/backend/agent.py)**: LangChain logic handling document retrieval (ChromaDB) and the LLM via Ollama.
+- **[NEW] [backend/requirements.txt](file:///devops-llm-saas/backend/requirements.txt)**: Python dependencies (`fastapi`, `langchain`, `chromadb`, etc.).
+- **[NEW] [backend/Dockerfile](file:///devops-llm-saas/backend/Dockerfile)**: Multi-stage Dockerfile for the backend.
+
+### Frontend (Streamlit)
+- **[NEW] [frontend/app.py](file:///devops-llm-saas/frontend/app.py)**: A clean, modern Streamlit UI tailored for a DevOps AI assistant.
+- **[NEW] [frontend/requirements.txt](file:///devops-llm-saas/frontend/requirements.txt)**: `streamlit`, `requests`.
+- **[NEW] [frontend/Dockerfile](file:///devops-llm-saas/frontend/Dockerfile)**: Dockerfile for the frontend.
+
+### Orchestration & CI/CD
+- **[NEW] [docker-compose.yml](file:///devops-llm-saas/docker-compose.yml)**: To spin up the frontend, backend, and an Ollama service locally.
+- **[NEW] [.github/workflows/deploy.yml](file:///devops-llm-saas/.github/workflows/deploy.yml)**: GitHub Actions pipeline for building and pushing the Docker containers.
+
+## Verification Plan
+1. **Local Test**: Verify the local directory structure is created correctly using shell commands.
+2. **Docker Compose**: Provide instructions on how to start the stack locally (`docker-compose up`).
+3. **Colab Test**: Ensure the notebook output is cleanly formatted for immediate upload to Google Colab.

@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: devops-ollama
+    volumes:
+      - ollama_storage:/root/.ollama
+    ports:
+      - "11434:11434"
+    networks:
+      - devops-network
+
+  backend:
+    build: ./backend
+    container_name: devops-backend
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    depends_on:
+      - ollama
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./backend/chroma_db:/app/backend/chroma_db
+    networks:
+      - devops-network
+
+  frontend:
+    build: ./frontend
+    container_name: devops-frontend
+    environment:
+      - BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
+    ports:
+      - "8501:8501"
+    networks:
+      - devops-network
+
+networks:
+  devops-network:
+    driver: bridge
+
+volumes:
+  ollama_storage:
