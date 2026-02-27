@@ -1,4 +1,4 @@
-# 🚀 DevOps LLM Agent SaaS
+# 🚀 DevOps LLM Agent 
 
 An open-source, locally hosted Large Language Model (LLM) agent specialized in DevOps tasks. Built using **FastAPI**, **Streamlit**, **LangChain**, and **Ollama**, this agent leverages Retrieval-Augmented Generation (RAG) to provide intelligent answers based on your company's private infrastructure documentation, scripts, and policies.
 
